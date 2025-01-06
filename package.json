@@ -18,7 +18,9 @@
     "@tanstack/react-table": "^8.20.5",
     "axios": "^1.7.7",
     "bignumber.js": "^9.1.2",
+    "ethers": "^6.13.4",
     "magic-sdk": "^28.2.0",
+    "permissionless": "^0.1.43",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.8.5",
@@ -27,7 +29,8 @@
     "react-dom": "^18.3.1",
     "viem": "^2.21.57",
     "wagmi": "^2.14.6",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

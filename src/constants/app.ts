@@ -1,1 +1,3 @@
 export const MID_SIZE_ADDRESS_LENGTH = 12;
+
+export const PAYMASTER_DATA = "0x025C2ef2fE205B23d136D3f175e8d3c497739deD9B00000000000000000000000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff";
