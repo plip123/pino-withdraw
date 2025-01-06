@@ -1,0 +1,1 @@
+export const MID_SIZE_ADDRESS_LENGTH = 12;

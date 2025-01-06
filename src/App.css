@@ -1,0 +1,8 @@
+@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
+
+#root {
+  max-height: 100dvh;
+  overflow-y: hidden;
+  margin: 0 auto;
+  text-align: center;
+}
