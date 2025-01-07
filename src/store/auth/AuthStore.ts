@@ -1,13 +1,7 @@
 import { Address } from "viem";
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
-
-interface AuthStore {
-  isLoggedIn: boolean;
-  eoaAddress?: Address;
-  logIn: (eoaAddress: Address) => void;
-  logOut: () => void;
-}
+import { AuthStore } from "./AuthStore.interface";
 
 export const useAuthStore = create(
   devtools(
@@ -15,8 +9,8 @@ export const useAuthStore = create(
       (set) => ({
         isLoggedIn: false,
         eoaAddress: undefined,
-        logIn: (eoaAddress: Address) => set({ eoaAddress }),
-        logOut: () => set({ isLoggedIn: false }),
+        logIn: (eoaAddress: Address) => set({ eoaAddress, isLoggedIn: true }),
+        logOut: () => set({ isLoggedIn: false, eoaAddress: undefined }),
       }),
       { name: "r2rwithdraw-auth" },
     ),

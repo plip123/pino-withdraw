@@ -5,9 +5,11 @@ import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { AddressCopyWidget, ChainSelector } from "@/components";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
+import { useSmartWallet } from "@/hooks";
 
 export const HeaderLayout = () => {
-  const { address: userAddress, isConnected } = useAccount();
+  const { isConnected } = useAccount();
+  const { smartAccountAddress: address } = useSmartWallet();
   const { connect, connectors, isPending } = useConnect();
   const { disconnect, isPending: isDisconnecting } = useDisconnect();
 
@@ -24,7 +26,7 @@ export const HeaderLayout = () => {
     () =>
       isConnected ? (
         <div className="hidden gap-4 md:flex align-items-center">
-          <AddressCopyWidget address={userAddress ?? zeroAddress} copyIcon />
+          <AddressCopyWidget address={address ?? zeroAddress} copyIcon />
           <ChainSelector />
           <Button
             label="Disconnect"
@@ -42,7 +44,7 @@ export const HeaderLayout = () => {
       ),
     [
       isConnected,
-      userAddress,
+      address,
       isDisconnecting,
       isPending,
       connectors,
