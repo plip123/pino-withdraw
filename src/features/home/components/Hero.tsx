@@ -1,7 +1,11 @@
+import { ConnectButton } from "@/features/auth";
 import { TransferModal } from "@/features/transfer";
 import { Image } from "primereact/image";
+import { useAccount } from "wagmi";
 
 export const Hero = () => {
+  const { isConnected } = useAccount();
+
   return (
     <div className="grid grid-nogutter text-800 mt-8">
       <div className="col-12 md:col-6 p-6 text-center md:text-left flex align-items-center">
@@ -17,7 +21,8 @@ export const Hero = () => {
             eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
 
-          <TransferModal />
+          {isConnected && <TransferModal />}
+          {!isConnected && <ConnectButton />}
         </section>
       </div>
       <div className="col-12 md:col-6 overflow-hidden py-8">
