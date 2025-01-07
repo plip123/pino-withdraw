@@ -1,4 +1,5 @@
-@import 'primereact/resources/themes/lara-light-blue/theme.css' layer(primereact);
+@import "primereact/resources/themes/lara-light-blue/theme.css"
+  layer(primereact);
 
 #root {
   max-height: 100dvh;

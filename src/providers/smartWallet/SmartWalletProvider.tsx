@@ -1,14 +1,10 @@
-import {
-  ReactNode,
-  useEffect,
-  useCallback,
-} from 'react';
-import { usePimlico } from '@/hooks';
-import { useAccount, useDisconnect } from 'wagmi';
-import { useAuthStore } from '@/store';
-import { WalletProviderContext } from './SmartWalletContext';
-import { useNotificationProvider } from '../notifications';
-import { env } from '@/utils';
+import { ReactNode, useEffect, useCallback } from "react";
+import { usePimlico } from "@/hooks";
+import { useAccount, useDisconnect } from "wagmi";
+import { useAuthStore } from "@/store";
+import { WalletProviderContext } from "./SmartWalletContext";
+import { useNotificationProvider } from "../notifications";
+import { env } from "@/utils";
 
 export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
   const notification = useNotificationProvider();
@@ -39,9 +35,9 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
       ) {
         if (notification?.show) {
           notification.show({
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Wrong account detected',
+            severity: "error",
+            summary: "Error",
+            detail: "Wrong account detected",
           });
         }
         logout();
@@ -54,14 +50,12 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
 
       return () => clearTimeout(timeout);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isConnected, address, eoaAddress]);
 
   useEffect(() => {
     switchAccountRecursive();
-  }, [
-    switchAccountRecursive,
-  ]);
+  }, [switchAccountRecursive]);
 
   return (
     <WalletProviderContext.Provider

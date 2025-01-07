@@ -28,7 +28,12 @@ const client = z.object({
  *
  * @type {Record<keyof z.infer<typeof server> | keyof z.infer<typeof client>, string | undefined>}
  */
-const processEnv: Record<keyof z.infer<typeof server> | keyof z.infer<typeof client> | keyof ImportMetaEnv, string | boolean | undefined> = {
+const processEnv: Record<
+  | keyof z.infer<typeof server>
+  | keyof z.infer<typeof client>
+  | keyof ImportMetaEnv,
+  string | boolean | undefined
+> = {
   BASE_URL: import.meta.env.BASE_URL,
   MODE: import.meta.env.MODE,
   DEV: import.meta.env.DEV,
@@ -50,7 +55,7 @@ const merged = server.merge(client);
  * @typedef {z.SafeParseReturnType<MergedInput, MergedOutput>} MergedSafeParseReturn
  */
 
-let env = /** @type {MergedOutput} */ (import.meta.env);
+let env = /** @type {MergedOutput} */ import.meta.env;
 
 if (!!import.meta.env.SKIP_ENV_VALIDATION == false) {
   const isServer = typeof window === "undefined";

@@ -1,3 +1,3 @@
-export * from './MagicContext';
-export * from './MagicProvider';
-export * from './useMagic';
+export * from "./MagicContext";
+export * from "./MagicProvider";
+export * from "./useMagic";

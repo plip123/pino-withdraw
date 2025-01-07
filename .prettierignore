@@ -1,0 +1,6 @@
+# Ignore all templates
+/templates/**
+/.vscode/**
+/.vite/**
+/node_modules/**
+yarn.lock

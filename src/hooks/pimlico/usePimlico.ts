@@ -2,20 +2,25 @@ import {
   ENTRYPOINT_ADDRESS_V07,
   createSmartAccountClient,
   walletClientToSmartAccountSigner,
-} from 'permissionless';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { http, createPublicClient, Address } from 'viem';
+} from "permissionless";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { http, createPublicClient, Address } from "viem";
 import {
   createPimlicoBundlerClient,
   createPimlicoPaymasterClient,
-} from 'permissionless/clients/pimlico';
-import { signerToSafeSmartAccount } from 'permissionless/accounts';
-import { useAccount, useWalletClient } from 'wagmi';
-import { JsonRpcProvider } from 'ethers';
-import { PAYMASTER_DATA, DEFAULT_CHAIN, CUSTOM_RPC_BY_CHAIN, SUPPORTED_CHAIN_IDS } from '@/constants';
+} from "permissionless/clients/pimlico";
+import { signerToSafeSmartAccount } from "permissionless/accounts";
+import { useAccount, useWalletClient } from "wagmi";
+import { JsonRpcProvider } from "ethers";
+import {
+  PAYMASTER_DATA,
+  DEFAULT_CHAIN,
+  CUSTOM_RPC_BY_CHAIN,
+  SUPPORTED_CHAIN_IDS,
+} from "@/constants";
 
-const PIMLICO_URI = 'https://api.pimlico.io/v2';
-const PIMLICO_SAFE_VERSION = '1.4.1';
+const PIMLICO_URI = "https://api.pimlico.io/v2";
+const PIMLICO_SAFE_VERSION = "1.4.1";
 
 export const usePimlico = () => {
   const { address, isConnected, chain = DEFAULT_CHAIN } = useAccount();
@@ -34,7 +39,13 @@ export const usePimlico = () => {
   }, [chain]);
 
   const publicClient = useMemo(() => {
-    if (!chain || !Object.values(SUPPORTED_CHAIN_IDS).some((chainId) => chainId === chain.id)) return undefined;
+    if (
+      !chain ||
+      !Object.values(SUPPORTED_CHAIN_IDS).some(
+        (chainId) => chainId === chain.id,
+      )
+    )
+      return undefined;
     return createPublicClient({
       transport: http(customRPC),
       chain,
@@ -66,7 +77,7 @@ export const usePimlico = () => {
     const smartAccountSigner = walletClientToSmartAccountSigner(walletClient);
     const provider = new JsonRpcProvider(customRPC);
     const isDeployed = smartAccountAddress
-      ? (await provider.getCode(smartAccountAddress)) !== '0x'
+      ? (await provider.getCode(smartAccountAddress)) !== "0x"
       : false;
 
     if (isDeployed) return;
@@ -78,7 +89,7 @@ export const usePimlico = () => {
         safeVersion: PIMLICO_SAFE_VERSION,
         entryPoint: ENTRYPOINT_ADDRESS_V07,
         address: smartAccountAddress as Address,
-      }
+      },
     );
 
     return createSmartAccountClient({
@@ -101,14 +112,17 @@ export const usePimlico = () => {
             userOperation,
           });
 
-          const userOp = (Object.keys(gas) as (keyof typeof gas)[]).reduce((acc, key) => {
-            const value = gas[key];
-            return {
-              ...acc,
-              [key]:
-                typeof value === 'bigint' ? calculateFinalGas(value) : value,
-            };
-          }, {});
+          const userOp = (Object.keys(gas) as (keyof typeof gas)[]).reduce(
+            (acc, key) => {
+              const value = gas[key];
+              return {
+                ...acc,
+                [key]:
+                  typeof value === "bigint" ? calculateFinalGas(value) : value,
+              };
+            },
+            {},
+          );
 
           return await paymasterClient.sponsorUserOperation({
             ...args,

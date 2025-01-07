@@ -1,3 +1,3 @@
-export * from './magic';
-export * from './notifications';
-export * from './smartWallet';
+export * from "./magic";
+export * from "./notifications";
+export * from "./smartWallet";

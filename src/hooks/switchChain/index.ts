@@ -1,1 +1,1 @@
-export * from './useSwitchChain';
+export * from "./useSwitchChain";

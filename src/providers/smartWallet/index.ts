@@ -1,1 +1,1 @@
-export * from './SmartWalletProvider';
+export * from "./SmartWalletProvider";
