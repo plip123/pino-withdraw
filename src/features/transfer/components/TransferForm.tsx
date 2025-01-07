@@ -3,6 +3,7 @@ import { useTransferForm } from "../hooks/useTransferForm";
 import { InputAmount } from "@/components";
 import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
 import { useAccount } from "wagmi";
+import { Button } from "primereact/button";
 
 export const TransferForm = () => {
   const { chainId, isConnected } = useAccount();
@@ -11,8 +12,10 @@ export const TransferForm = () => {
     addressError,
     amount,
     amountError,
+    canTransfer,
     handleAmount,
     handleAddress,
+    handleTransfer,
   } = useTransferForm();
 
   return (
@@ -50,6 +53,14 @@ export const TransferForm = () => {
           </small>
         )}
       </div>
+
+      <Button
+        label="Transfer"
+        type="button"
+        className="mr-3 p-button-raised w-full"
+        onClick={handleTransfer}
+        disabled={!canTransfer || !isConnected}
+      />
     </div>
   );
 };
