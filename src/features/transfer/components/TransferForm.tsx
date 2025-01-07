@@ -1,13 +1,8 @@
 import { InputText } from "primereact/inputtext";
 import { useTransferForm } from "../hooks/useTransferForm";
 
-
 export const TransferForm = () => {
-  const {
-    toAddress,
-    addressError,
-    handleAddress,
-  } = useTransferForm();
+  const { toAddress, addressError, handleAddress } = useTransferForm();
 
   return (
     <div className="flex w-full flex-col">

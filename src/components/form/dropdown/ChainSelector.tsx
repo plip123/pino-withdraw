@@ -1,20 +1,20 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from "react";
 import {
   DEFAULT_CHAIN,
   SUPPORTED_CHAIN_IDS,
   SUPPORTED_CHAINS,
-} from '@/constants';
-import type { IChainSelector } from './ChainSelector.interface';
-import { getChainById, getChainIcon } from '@/utils';
-import { useNotificationProvider } from '@/providers';
-import { Dropdown } from 'primereact/dropdown';
-import { Image } from 'primereact/image';
-import { useAccount } from 'wagmi';
-import { useSwitchChain } from '@/hooks';
+} from "@/constants";
+import type { IChainSelector } from "./ChainSelector.interface";
+import { getChainById, getChainIcon } from "@/utils";
+import { useNotificationProvider } from "@/providers";
+import { Dropdown } from "primereact/dropdown";
+import { Image } from "primereact/image";
+import { useAccount } from "wagmi";
+import { useSwitchChain } from "@/hooks";
 
 export const ChainSelector = ({
   newChainId,
-  size = 'normal',
+  size = "normal",
   fullWidth = false,
   onChange,
 }: IChainSelector) => {
@@ -41,19 +41,19 @@ export const ChainSelector = ({
       if (notification?.show) {
         const chainName = getChainById(id).name;
         notification.show({
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Switched to ' + chainName,
+          severity: "success",
+          summary: "Success",
+          detail: "Switched to " + chainName,
         });
       }
       if (onChange) onChange(id);
     } catch (error) {
-      console.error('Error switching network', error);
+      console.error("Error switching network", error);
       if (notification?.show) {
         notification.show({
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Failed to switch network',
+          severity: "error",
+          summary: "Error",
+          detail: "Failed to switch network",
         });
       }
     }
@@ -64,12 +64,8 @@ export const ChainSelector = ({
     const icon = getChainIcon(id);
     const { name } = getChainById(id);
     return (
-      <div className='flex h-full align-items-center gap-4'>
-        <Image
-          src={`/images/${icon}.svg`}
-          alt='chain-icon'
-          width='25'
-        />
+      <div className="flex h-full align-items-center gap-4">
+        <Image src={`/images/${icon}.svg`} alt="chain-icon" width="25" />
         <span>{name}</span>
       </div>
     );
@@ -77,30 +73,30 @@ export const ChainSelector = ({
 
   const finalSizeClassName = useMemo(() => {
     switch (size) {
-      case 'normal':
-        return 'h-10';
-      case 'large':
-        return 'h-16';
-      case 'xlarge':
-        return 'h-20';
+      case "normal":
+        return "h-10";
+      case "large":
+        return "h-16";
+      case "xlarge":
+        return "h-20";
       default:
-        return 'h-10';
+        return "h-10";
     }
   }, [size]);
 
   const finalFullWidthClassName = useMemo(() => {
-    return fullWidth ? 'w-full' : 'w-full md:w-60';
+    return fullWidth ? "w-full" : "w-full md:w-60";
   }, [fullWidth]);
 
   const finalChainSelectorClassName = useMemo(() => {
-    return [finalSizeClassName, finalFullWidthClassName].join(' ');
+    return [finalSizeClassName, finalFullWidthClassName].join(" ");
   }, [finalSizeClassName, finalFullWidthClassName]);
 
   return (
     <Dropdown
       value={selectedChain}
       options={Object.values(SUPPORTED_CHAINS).map((chain) => chain.id)}
-      placeholder={'Select Chain'}
+      placeholder={"Select Chain"}
       onChange={(e) => handleChainChange(e.value)}
       valueTemplate={chainOptionTemplate}
       itemTemplate={chainOptionTemplate}

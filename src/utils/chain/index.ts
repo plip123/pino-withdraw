@@ -10,7 +10,7 @@ export const getChainIcon = (chainId: number) => {
     case polygonAmoy.id:
       return "polygon";
     case bsc.id:
-        return "binance";
+      return "binance";
     default:
       return "logo";
   }
@@ -18,7 +18,8 @@ export const getChainIcon = (chainId: number) => {
 
 export const getChainById = (chainId: number) => {
   return (
-    Object.values(SUPPORTED_CHAINS).find((chain) => chain.id === chainId) ?? DEFAULT_CHAIN
+    Object.values(SUPPORTED_CHAINS).find((chain) => chain.id === chainId) ??
+    DEFAULT_CHAIN
   );
 };
 
@@ -28,4 +29,4 @@ export const getSupportedChainIds = () => {
 
 export const getUSDTAddressByChainId = (chainId: number) => {
   return USDT_ADDRESSES[chainId];
-}
+};

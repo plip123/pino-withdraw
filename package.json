@@ -8,7 +8,13 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "lint:check": "eslint --max-warnings=0 .",
+    "lint:fix": "eslint --fix .",
+    "preview": "vite preview",
+    "prettier:check": "prettier --ignore-path .prettierignore --check .",
+    "prettier:fix": "prettier --ignore-path .prettierignore --write .",
+    "pre-commit": "yarn run prettier:fix && yarn run lint:check",
+    "type-check": "tsc --noEmit"
   },
   "dependencies": {
     "@magiclabs/wagmi-connector": "^2.0.0",
@@ -18,7 +24,9 @@
     "@tanstack/react-table": "^8.20.5",
     "axios": "^1.7.7",
     "bignumber.js": "^9.1.2",
+    "ethers": "^6.13.4",
     "magic-sdk": "^28.2.0",
+    "permissionless": "^0.1.43",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primereact": "^10.8.5",
@@ -27,7 +35,8 @@
     "react-dom": "^18.3.1",
     "viem": "^2.21.57",
     "wagmi": "^2.14.6",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -35,9 +44,12 @@
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
     "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.14.0",
+    "prettier": "^3.3.3",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
     "vite": "^6.0.5"

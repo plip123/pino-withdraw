@@ -1,1 +1,1 @@
-export * from './AddressCopyWidget';
+export * from "./AddressCopyWidget";
