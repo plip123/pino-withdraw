@@ -16,7 +16,7 @@ export const TransferForm = () => {
   } = useTransferForm();
 
   return (
-    <div className="p-2">
+    <div>
       <div className="mb-4">
         <label htmlFor="address-input" className="font-semibold">
           To:

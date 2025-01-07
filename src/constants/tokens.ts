@@ -21,7 +21,7 @@ export const USDT_DATA = {
     contractAddress: USDT_ADDRESSES[SUPPORTED_CHAIN_IDS.POLYGON],
   },
   [SUPPORTED_CHAIN_IDS.BSC]: {
-    decimals: 18,
+    decimals: 6,
     symbol: "USDT",
     name: "Tether USD",
     contractAddress: USDT_ADDRESSES[SUPPORTED_CHAIN_IDS.BSC],
