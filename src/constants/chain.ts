@@ -20,6 +20,12 @@ export const CHAIN_SHORT_NAME: Record<SUPPORTED_CHAIN_IDS, string> = {
   [bsc.id]: "bsc",
 };
 
+export const CHAIN_NAME_FOR_ALCHEMY: Record<SUPPORTED_CHAIN_IDS, string> = {
+  [polygon.id]: "polygon",
+  [mainnet.id]: "eth",
+  [bsc.id]: "bnb",
+};
+
 export const SUPPORTED_CHAINS: Record<SUPPORTED_CHAIN_IDS, Chain> = {
   [mainnet.id]: mainnet,
   [polygon.id]: polygon,
