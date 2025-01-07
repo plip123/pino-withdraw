@@ -14,5 +14,5 @@ export interface GetTokensResponse extends GenericResponse {
   result: {
     address: string;
     tokenBalances: TokenBalance[];
-  },
+  };
 }

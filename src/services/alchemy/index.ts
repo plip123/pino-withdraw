@@ -1,1 +1,1 @@
-export * from './GetTokens';
+export * from "./GetTokens";

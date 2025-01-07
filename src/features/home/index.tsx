@@ -3,7 +3,6 @@ import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 
 export const Home = () => {
-
   return (
     <div className="h-full">
       <HeaderLayout />
@@ -17,9 +16,8 @@ export const Home = () => {
               your blocked assets
             </div>
             <p className="mt-0 mb-4 text-700 line-height-3">
-              Lorem ipsum dolor sit amet, consectetur adipiscing
-              elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
 
             <Button
