@@ -1,4 +1,3 @@
-import { env } from "@/utils";
 import {
   bsc,
   Chain,
@@ -9,9 +8,9 @@ import {
 } from "wagmi/chains";
 
 export const CUSTOM_RPC_BY_CHAIN = {
-  [mainnet.id]: `https://mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
-  [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
-  [bsc.id]: `https://bnb-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
+  [mainnet.id]: `https://mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY}`,
+  [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY}`,
+  [bsc.id]: `https://bnb-mainnet.g.alchemy.com/v2/${import.meta.env.VITE_ALCHEMY_KEY}`,
 };
 
 export const CHAIN_SHORT_NAME: Record<SUPPORTED_CHAIN_IDS, string> = {
