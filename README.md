@@ -1,6 +1,6 @@
-# LGRT APP
+# R2R Withdraw
 
-The R2R Withdraw App is a ReactJS/Vite application that makes it easy for R2R DeFi users to transfer their tokens that were locked by sending a USDT token to a wallet to be specified.
+The R2R Withdraw App is a ReactJS/Vite application that makes it easy for R2R DeFi users to transfer their locked tokens by sending a USDT token to a wallet to be specified.
 
 Key Features:
 
@@ -32,4 +32,4 @@ To use the R2R Withdraw, follow these instructions:
 2. Connect your wallet or with your social login.
 3. Check your USDT balance.
 4. Specify the wallet to transfer.
-5. Click to transfer button.
+5. Click the transfer button.
