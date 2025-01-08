@@ -50,7 +50,7 @@ export const TransferModal = () => {
           if (!visible) return;
           setVisible(false);
         }}
-        style={{ width: "50vw" }}
+        style={{ width: "35vw" }}
         breakpoints={{ "960px": "75vw", "641px": "90vw" }}
         draggable={false}
       >
