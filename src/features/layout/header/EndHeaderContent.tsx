@@ -7,8 +7,8 @@ import { useSmartWallet } from "@/hooks";
 
 export const EndHeaderContent = () => {
   const { isConnected } = useAccount();
-  const { smartAccountAddress: address } = useSmartWallet();
-  const { disconnect, isPending: isDisconnecting } = useDisconnect();
+  const { smartAccountAddress: address, logout } = useSmartWallet();
+  const { isPending: isDisconnecting } = useDisconnect();
 
   return (
     <div className="flex flex-column md:flex-row align-items-center justify-content-between h-full pt-2 md:pt-0">
@@ -30,7 +30,7 @@ export const EndHeaderContent = () => {
             label="Disconnect"
             className="w-full mt-auto md:mt-0"
             loading={isDisconnecting && isConnected}
-            onClick={() => disconnect()}
+            onClick={logout}
           />
         </div>
       ) : (

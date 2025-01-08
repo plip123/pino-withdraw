@@ -5,13 +5,15 @@ import { useAuthStore } from "@/store";
 import { WalletProviderContext } from "./SmartWalletContext";
 import { useNotificationProvider } from "../notifications";
 import { env } from "@/utils";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
+  const queryClient = useQueryClient();
   const notification = useNotificationProvider();
   const eoaAddress = useAuthStore((state) => state.eoaAddress);
   const logOut = useAuthStore((state) => state.logOut);
   const { isConnected, address } = useAccount();
-  const { disconnect } = useDisconnect();
+  const { disconnectAsync } = useDisconnect();
   const {
     smartAccountAddress,
     isLoadingSafeWallet,
@@ -19,11 +21,24 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
     setSmartAccountAddress,
   } = usePimlico();
 
-  const logout = () => {
-    localStorage.removeItem(env.VITE_LOCALE_TOKEN_NAME);
-    logOut();
-    disconnect();
-    window.location.reload();
+  const logout = async () => {
+    try {
+      localStorage.removeItem(env.VITE_LOCALE_TOKEN_NAME);
+      logOut();
+      setSmartAccountAddress(undefined);
+      queryClient.clear();
+      await disconnectAsync();
+      window.location.reload();
+    } catch (error) {
+      console.error("Error logging out: ", error);
+      if (notification?.show) {
+        notification.show({
+          severity: "error",
+          summary: "Error: disconnect",
+          detail: "Error logging out, please try again",
+        });
+      }
+    }
   };
 
   const switchAccountRecursive = useCallback(async () => {
@@ -64,6 +79,7 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
         isLoadingSafeWallet,
         getSmartAccountClient,
         setSmartAccountAddress,
+        logout,
       }}
     >
       {children}
