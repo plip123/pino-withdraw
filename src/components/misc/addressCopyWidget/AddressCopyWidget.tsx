@@ -32,7 +32,7 @@ export const AddressCopyWidget = ({
 
   return (
     <div
-      className={`flex select-none align-items-center justify-center gap-2 ${className}`}
+      className={`flex select-none align-items-center justify-content-center gap-2 ${className ?? ""}`}
       onClick={copyIcon ? onCopy : undefined}
     >
       {copyIcon && <span className="pi pi-copy cursor-pointer" />}
