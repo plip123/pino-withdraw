@@ -6,6 +6,7 @@ const defaultValues: TSmartWalletContextValues = {
   isLoadingSafeWallet: false,
   getSmartAccountClient: () => {},
   setSmartAccountAddress: () => {},
+  logout: () => {},
 };
 
 export const WalletProviderContext =

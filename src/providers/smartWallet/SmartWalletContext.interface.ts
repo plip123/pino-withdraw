@@ -6,4 +6,5 @@ export type TSmartWalletContextValues = {
   isLoadingSafeWallet: boolean;
   getSmartAccountClient: () => void;
   setSmartAccountAddress: Dispatch<SetStateAction<Address | undefined>>;
+  logout: () => void;
 };
