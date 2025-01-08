@@ -11,7 +11,6 @@ import {
 } from "permissionless/clients/pimlico";
 import { signerToSafeSmartAccount } from "permissionless/accounts";
 import { useAccount, useWalletClient } from "wagmi";
-import { JsonRpcProvider } from "ethers";
 import {
   PAYMASTER_DATA,
   DEFAULT_CHAIN,
@@ -75,13 +74,6 @@ export const usePimlico = () => {
   const getSmartAccountClient = useCallback(async () => {
     if (!address || !isConnected || !publicClient || !walletClient) return;
     const smartAccountSigner = walletClientToSmartAccountSigner(walletClient);
-    const provider = new JsonRpcProvider(customRPC);
-    const isDeployed = smartAccountAddress
-      ? (await provider.getCode(smartAccountAddress)) !== "0x"
-      : false;
-
-    if (isDeployed) return;
-
     const smartAccountSafeSigner = await signerToSafeSmartAccount(
       publicClient,
       {
@@ -148,6 +140,7 @@ export const usePimlico = () => {
   return {
     getSmartAccountClient,
     smartAccountAddress,
+    publicClient,
     isLoadingSafeWallet: !!isLoadingSafeWallet,
     setSmartAccountAddress,
   };

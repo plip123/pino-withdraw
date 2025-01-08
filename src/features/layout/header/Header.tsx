@@ -1,16 +1,16 @@
 import { useMemo } from "react";
 import { zeroAddress } from "viem";
 import { Toolbar } from "primereact/toolbar";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { AddressCopyWidget, ChainSelector } from "@/components";
 import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import { useSmartWallet } from "@/hooks";
+import { ConnectButton } from "@/features/auth";
 
 export const HeaderLayout = () => {
   const { isConnected } = useAccount();
   const { smartAccountAddress: address } = useSmartWallet();
-  const { connect, connectors, isPending } = useConnect();
   const { disconnect, isPending: isDisconnecting } = useDisconnect();
 
   const StartContent = useMemo(
@@ -36,21 +36,9 @@ export const HeaderLayout = () => {
           />
         </div>
       ) : (
-        <Button
-          label={isPending ? "Connecting" : "Connect"}
-          loading={isPending && !isConnected}
-          onClick={() => connect({ connector: connectors[0] })}
-        />
+        <ConnectButton />
       ),
-    [
-      isConnected,
-      address,
-      isDisconnecting,
-      isPending,
-      connectors,
-      disconnect,
-      connect,
-    ],
+    [isConnected, address, isDisconnecting, disconnect],
   );
 
   return (

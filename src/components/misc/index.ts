@@ -1,1 +1,2 @@
-export * from "./AddressCopyWidget";
+export * from "./addressCopyWidget";
+export * from "./tokenRow";
