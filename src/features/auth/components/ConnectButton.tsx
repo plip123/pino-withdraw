@@ -10,9 +10,7 @@ interface ConnectButtonProps {
   isLoading?: boolean;
 }
 
-export const ConnectButton = ({
-  isLoading = false,
-}: ConnectButtonProps) => {
+export const ConnectButton = ({ isLoading = false }: ConnectButtonProps) => {
   const op = useRef<OverlayPanel>(null);
   const { isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
@@ -37,7 +35,7 @@ export const ConnectButton = ({
   return (
     <>
       <Button
-        label={(isPending || isLoading) ? "Connecting" : "Connect"}
+        label={isPending || isLoading ? "Connecting" : "Connect"}
         loading={(isPending || isLoading) && !isConnected}
         onClick={(e) => op.current?.toggle(e)}
         className="w-full md:w-auto"

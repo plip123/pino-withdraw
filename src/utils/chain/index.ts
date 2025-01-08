@@ -1,4 +1,11 @@
-import { arbitrum, bsc, mainnet, polygon, polygonAmoy, sepolia } from "wagmi/chains";
+import {
+  arbitrum,
+  bsc,
+  mainnet,
+  polygon,
+  polygonAmoy,
+  sepolia,
+} from "wagmi/chains";
 import { DEFAULT_CHAIN, SUPPORTED_CHAINS, USDT_ADDRESSES } from "@/constants";
 
 export const getChainIcon = (chainId: number) => {
