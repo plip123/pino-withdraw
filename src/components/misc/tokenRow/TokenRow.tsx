@@ -5,9 +5,7 @@ import { ITokenRow } from "./TokenRow.interface";
 
 export const TokenRow = ({ token, className }: ITokenRow) => {
   const tokenBalance = useMemo(() => {
-    return BigNumber(token.tokenBalance)
-      .shiftedBy(token.decimals ?? 18)
-      .toFixed(token.decimals ?? 18);
+    return BigNumber(token.tokenBalance).toString(10);
   }, [token]);
 
   return (

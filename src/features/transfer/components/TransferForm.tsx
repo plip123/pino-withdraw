@@ -4,6 +4,8 @@ import { InputAmount } from "@/components";
 import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
 import { useAccount } from "wagmi";
 import { Button } from "primereact/button";
+import { BlockUI } from "primereact/blockui";
+import { BlockUITemplate } from "./BlockUITemplate";
 
 export const TransferForm = () => {
   const { chainId, isConnected } = useAccount();
@@ -12,14 +14,43 @@ export const TransferForm = () => {
     addressError,
     amount,
     amountError,
+    token,
+    txHash,
     canTransfer,
+    isLoading,
+    isError,
+    isSuccess,
+    cleanTransferData,
     handleAmount,
     handleAddress,
     handleTransfer,
   } = useTransferForm();
 
   return (
-    <div>
+    <BlockUI
+      blocked={isLoading || isSuccess || isError}
+      template={
+        <BlockUITemplate
+          isLoading={isLoading}
+          isSuccess={isSuccess}
+          isError={isError}
+          amount={amount}
+          toAddress={toAddress}
+          token={token}
+          txHash={txHash}
+          onClick={cleanTransferData}
+        />
+      }
+      containerStyle={{ padding: "16px" }}
+      pt={{
+        mask: {
+          style: {
+            background:
+              "radial-gradient(circle, rgba(33,33,33,0.75) 50%, rgba(29,29,29,0.6) 100%)",
+          },
+        },
+      }}
+    >
       <div className="mb-4">
         <label htmlFor="address-input" className="font-semibold">
           To:
@@ -31,6 +62,7 @@ export const TransferForm = () => {
           className="w-full"
           placeholder={"0x"}
           invalid={!!addressError}
+          disabled={!isConnected || isLoading}
         />
         {addressError && (
           <small id="address-input-help" className="text-red-500">
@@ -46,6 +78,7 @@ export const TransferForm = () => {
           loading={!isConnected}
           value={amount}
           onChange={handleAmount}
+          disabled={!isConnected || isLoading}
         />
         {amountError && (
           <small id="address-input-help" className="text-red-500">
@@ -59,8 +92,9 @@ export const TransferForm = () => {
         type="button"
         className="mr-3 p-button-raised w-full"
         onClick={handleTransfer}
-        disabled={!canTransfer || !isConnected}
+        disabled={!canTransfer || !isConnected || isLoading}
+        loading={isLoading}
       />
-    </div>
+    </BlockUI>
   );
 };

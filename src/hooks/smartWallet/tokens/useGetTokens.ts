@@ -10,6 +10,8 @@ export const useGetTokens = ({
 }: IGetToken) => {
   return useQuery({
     queryKey: ["getTokens", chainId, address, tokenAddr],
+    refetchInterval: 10000,
+    retry: 2,
     queryFn: async () => {
       const tokensResponse = await getTokens(chainId, address, tokenAddr);
       return tokensResponse.result.tokenBalances;

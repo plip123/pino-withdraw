@@ -1,6 +1,6 @@
 import { BASIC_TRANSFER_TOKEN_FUNCTIONS } from "@/constants";
 import { ethers } from "ethers";
-import { Address } from "viem";
+import { Address, parseAbi } from "viem";
 
 export const buildErc20ApproveTransaction = (
   targetAddress: Address,
@@ -30,7 +30,7 @@ export const buildErc20TransferTransaction = (
   decimals: number = 18,
 ) => {
   const contractInterface = new ethers.Interface(
-    BASIC_TRANSFER_TOKEN_FUNCTIONS[1],
+    parseAbi(BASIC_TRANSFER_TOKEN_FUNCTIONS),
   );
   const parseAmount = ethers.parseUnits(amount, decimals).toString();
   const transaction = {

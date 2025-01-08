@@ -10,10 +10,14 @@ import { useAccount } from "wagmi";
 
 export const useTransferForm = () => {
   const notification = useNotificationProvider();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const [toAddress, setToAddress] = useState<string>("");
   const [addressError, setAddressError] = useState<string>("");
   const [amount, setAmount] = useState<string>("0");
   const [amountError, setAmountError] = useState<string>("");
+  const [txHash, setTxHash] = useState<string>("");
   const { chainId } = useAccount();
   const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
   const { getSmartAccountClient, publicClient } = usePimlico();
@@ -56,7 +60,7 @@ export const useTransferForm = () => {
   const handleAmount = (value: string = "0") => {
     setAmount(value);
 
-    const bnValue = new BigNumber(value).shiftedBy(6);
+    const bnValue = new BigNumber(value).shiftedBy(token.decimals ?? 18);
 
     if (!value || parseFloat(value) === 0) {
       setAmountError("Invalid amount");
@@ -80,9 +84,11 @@ export const useTransferForm = () => {
     }
 
     try {
-      console.log("Transfer", toAddress, amount);
+      setIsLoading(true);
       const smartAccountClient = await getSmartAccountClient();
-      const txHash = await smartAccountClient?.sendTransactions({
+      if (!smartAccountClient) throw new Error("SmartAccountClient not found");
+
+      const hash = await smartAccountClient?.sendTransactions({
         account: smartAccountClient.account,
         transactions: [
           buildErc20TransferTransaction(
@@ -94,9 +100,15 @@ export const useTransferForm = () => {
         ],
       });
       const receipt = await publicClient?.waitForTransactionReceipt({
-        hash: txHash as `0x${string}`,
+        hash: hash as `0x${string}`,
       });
-      console.log("Receipt", receipt);
+      setTxHash(receipt?.transactionHash ?? "");
+
+      if (receipt?.status === "success") {
+        setIsSuccess(true);
+      } else {
+        setIsError(true);
+      }
     } catch (error) {
       console.error("Error transferring", error);
       if (notification?.show) {
@@ -106,7 +118,20 @@ export const useTransferForm = () => {
           detail: "Failed to transfer",
         });
       }
+    } finally {
+      setIsLoading(false);
     }
+  };
+
+  const cleanTransferData = () => {
+    setTxHash("");
+    setToAddress("");
+    setAmount("0");
+    setAddressError("");
+    setAmountError("");
+    setIsSuccess(false);
+    setIsError(false);
+    setIsLoading(false);
   };
 
   return {
@@ -114,7 +139,13 @@ export const useTransferForm = () => {
     addressError,
     amount,
     amountError,
+    token,
+    txHash,
     canTransfer,
+    isLoading,
+    isSuccess,
+    isError,
+    cleanTransferData,
     setAmount,
     handleAddress,
     handleAmount,

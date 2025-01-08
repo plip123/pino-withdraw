@@ -14,12 +14,12 @@ export const TransferModal = () => {
   const { chainId } = useAccount();
   const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
   const [visible, setVisible] = useState<boolean>(false);
-  const tokenBalances = useGetTokens({
+  const { data: tokenBalances } = useGetTokens({
     chainId: chainId ?? DEFAULT_CHAIN.id,
     address,
     tokenAddr: USDT_DATA[chainId ?? DEFAULT_CHAIN.id].contractAddress,
     enabled: true,
-  }).data;
+  });
 
   const token: IToken = useMemo(() => {
     const usdtToken = USDT_DATA[chainId ?? DEFAULT_CHAIN.id];
