@@ -6,7 +6,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { useSmartWallet } from "@/hooks";
 
 export const EndHeaderContent = () => {
-  const { isConnected } = useAccount();
+  const { isConnected, isConnecting } = useAccount();
   const { smartAccountAddress: address, logout } = useSmartWallet();
   const { isPending: isDisconnecting } = useDisconnect();
 
@@ -34,7 +34,7 @@ export const EndHeaderContent = () => {
           />
         </div>
       ) : (
-        <ConnectButton />
+        <ConnectButton isLoading={isConnecting} />
       )}
     </div>
   );
