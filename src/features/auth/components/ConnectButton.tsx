@@ -6,7 +6,11 @@ import { Menu } from "primereact/menu";
 import { MenuItem } from "primereact/menuitem";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 
-export const ConnectButton = () => {
+interface ConnectButtonProps {
+  isLoading?: boolean;
+}
+
+export const ConnectButton = ({ isLoading = false }: ConnectButtonProps) => {
   const op = useRef<OverlayPanel>(null);
   const { isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
@@ -31,8 +35,8 @@ export const ConnectButton = () => {
   return (
     <>
       <Button
-        label={isPending ? "Connecting" : "Connect"}
-        loading={isPending && !isConnected}
+        label={isPending || isLoading ? "Connecting" : "Connect"}
+        loading={(isPending || isLoading) && !isConnected}
         onClick={(e) => op.current?.toggle(e)}
         className="w-full md:w-auto"
       />

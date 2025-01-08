@@ -28,6 +28,7 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
       setSmartAccountAddress(undefined);
       queryClient.clear();
       await disconnectAsync();
+      await disconnectAsync();
       window.location.reload();
     } catch (error) {
       console.error("Error logging out: ", error);

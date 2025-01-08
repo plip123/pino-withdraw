@@ -1,4 +1,4 @@
-import { bsc, mainnet, polygon } from "wagmi/chains";
+import { arbitrum, bsc, mainnet, polygon } from "wagmi/chains";
 import { Chain, http } from "viem";
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import {
@@ -13,8 +13,10 @@ import { env } from "@/utils";
 const SUPPORTED_CHAINS: Chain[] = [polygon, bsc];
 
 const CUSTOM_RPC_BY_CHAIN: Record<number, string> = {
+  [mainnet.id]: `https://eth-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
   [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
   [bsc.id]: `https://bnb-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
+  [arbitrum.id]: `https://arb-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
 };
 
 export const getMagicConnectorFn = (
@@ -142,6 +144,7 @@ export const config = createConfig({
     [mainnet.id]: http(CUSTOM_RPC_BY_CHAIN[mainnet.id]),
     [polygon.id]: http(CUSTOM_RPC_BY_CHAIN[polygon.id]),
     [bsc.id]: http(CUSTOM_RPC_BY_CHAIN[bsc.id]),
+    [arbitrum.id]: http(CUSTOM_RPC_BY_CHAIN[arbitrum.id]),
   },
   connectors,
 });
