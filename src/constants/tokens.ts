@@ -27,3 +27,8 @@ export const USDT_DATA = {
     contractAddress: USDT_ADDRESSES[SUPPORTED_CHAIN_IDS.BSC],
   },
 };
+
+export const BASIC_TRANSFER_TOKEN_FUNCTIONS = [
+  "function approve(address,uint)",
+  "function transfer(address to, uint256 amount) external returns (bool)",
+] as const;

@@ -148,6 +148,7 @@ export const usePimlico = () => {
   return {
     getSmartAccountClient,
     smartAccountAddress,
+    publicClient,
     isLoadingSafeWallet: !!isLoadingSafeWallet,
     setSmartAccountAddress,
   };

@@ -1,7 +1,8 @@
 import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
-import { useGetTokens, useSmartWallet } from "@/hooks";
+import { useGetTokens, usePimlico, useSmartWallet } from "@/hooks";
 import { IToken } from "@/interfaces";
 import { useNotificationProvider } from "@/providers";
+import { buildErc20TransferTransaction } from "@/utils";
 import BigNumber from "bignumber.js";
 import { useMemo, useState } from "react";
 import { getAddress, zeroAddress } from "viem";
@@ -15,6 +16,7 @@ export const useTransferForm = () => {
   const [amountError, setAmountError] = useState<string>("");
   const { chainId } = useAccount();
   const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
+  const { getSmartAccountClient, publicClient } = usePimlico();
   const { data: tokenBalances } = useGetTokens({
     chainId: chainId ?? DEFAULT_CHAIN.id,
     address,
@@ -65,8 +67,8 @@ export const useTransferForm = () => {
     }
   };
 
-  const handleTransfer = () => {
-    if (!toAddress || !amount || addressError || amountError) {
+  const handleTransfer = async () => {
+    if (!canTransfer) {
       if (notification?.show) {
         notification.show({
           severity: "error",
@@ -79,6 +81,22 @@ export const useTransferForm = () => {
 
     try {
       console.log("Transfer", toAddress, amount);
+      const smartAccountClient = await getSmartAccountClient();
+      const txHash = await smartAccountClient?.sendTransactions({
+        account: smartAccountClient.account,
+        transactions: [
+          buildErc20TransferTransaction(
+            getAddress(toAddress),
+            token.contractAddress,
+            amount,
+            token.decimals,
+          ),
+        ],
+      });
+      const receipt = await publicClient?.waitForTransactionReceipt({
+        hash: txHash as `0x${string}`,
+      });
+      console.log("Receipt", receipt);
     } catch (error) {
       console.error("Error transferring", error);
       if (notification?.show) {
