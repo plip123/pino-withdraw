@@ -1,6 +1,5 @@
 import { ConnectButton } from "@/features/auth";
 import { TransferCard } from "@/features/transfer";
-import { BlockUI } from "primereact/blockui";
 import { useAccount } from "wagmi";
 
 export const Hero = () => {
@@ -23,27 +22,8 @@ export const Hero = () => {
           {!isConnected && <ConnectButton />}
         </section>
       </div>
-      <div className="col-12 md:col-6 overflow-hidden py-8 pr-8">
-        <BlockUI
-          blocked={!isConnected}
-          template={
-            <div className="relative text-center text-white font-bold flex flex-column gap-2">
-              <i className="pi pi-lock" style={{ fontSize: '3rem' }} />
-              <p>Please connect your wallet to enable the transfer. </p>
-              <ConnectButton />
-            </div>
-          }
-          pt={{
-            mask: {
-              style: {
-                background:
-                  "radial-gradient(circle, rgba(33,33,33,0.6) 50%, rgba(29,29,29,0.5) 100%)",
-              },
-            },            
-          }}
-        >
-          <TransferCard />
-        </BlockUI>
+      <div className="col-12 md:col-6 overflow-hidden py-8 pr-4">
+        <TransferCard />
       </div>
     </div>
   );

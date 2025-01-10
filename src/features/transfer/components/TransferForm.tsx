@@ -6,6 +6,7 @@ import { useAccount } from "wagmi";
 import { Button } from "primereact/button";
 import { BlockUI } from "primereact/blockui";
 import { BlockUITemplate } from "./BlockUITemplate";
+import { ConnectButton } from "@/features/auth";
 
 export const TransferForm = () => {
   const { chainId, isConnected } = useAccount();
@@ -87,14 +88,16 @@ export const TransferForm = () => {
         )}
       </div>
 
-      <Button
-        label="Transfer"
-        type="button"
-        className="mr-3 p-button-raised w-full"
-        onClick={handleTransfer}
-        disabled={!canTransfer || !isConnected || isLoading}
-        loading={isLoading}
-      />
+      {isConnected ? 
+        <Button
+          label="Transfer"
+          type="button"
+          className="mr-3 p-button-raised w-full"
+          onClick={handleTransfer}
+          disabled={!canTransfer || !isConnected || isLoading}
+          loading={isLoading}
+        />
+      : <ConnectButton fullWidth />}
     </BlockUI>
   );
 };

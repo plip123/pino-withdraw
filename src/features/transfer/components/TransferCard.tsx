@@ -34,7 +34,15 @@ export const TransferCard = () => {
   }, [chainId, tokenBalances]);
 
   return (
-    <Card>
+    <Card
+      pt={{
+        root: {
+          style: {
+            borderRadius: "12px",
+          },
+        }
+      }}
+    >
       <TokenRow token={token} className="mb-4" />
       <TransferForm />
     </Card>
