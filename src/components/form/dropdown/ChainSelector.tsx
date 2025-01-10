@@ -21,7 +21,7 @@ export const ChainSelector = ({
 }: IChainSelector) => {
   const { chainId } = useAccount();
   const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
-  const { switchChain } = useSwitchChain();
+  const { switchChain, isLoading } = useSwitchChain();
   const [selectedChain, setSelectedChain] = useState<SUPPORTED_CHAIN_IDS>(
     newChainId || chainId || DEFAULT_CHAIN.id,
   );
@@ -62,12 +62,27 @@ export const ChainSelector = ({
     setSelectedChain(id);
   };
 
-  const chainValueTemplate = () => {
+  const chainValueTemplate = (id: SUPPORTED_CHAIN_IDS) => {
     if (address === zeroAddress)
       return <i className="pi pi-spin pi-spinner-dotted" />;
 
+    const icon = getChainIcon(id);
     const shortAddress = shortenAddress(address);
-    return <span>{shortAddress}</span>;
+    return (
+      <div className="flex h-full align-items-center gap-4">
+        {isLoading ? (
+          <i className="pi pi-spin pi-spinner-dotted" />
+        ) : (
+          <Image
+            src={`/images/${icon}.svg`}
+            pt={{ root: { style: { display: "flex", alignItems: "center" } } }}
+            alt="chain-icon"
+            width="25"
+          />
+        )}
+        <span>{shortAddress}</span>
+      </div>
+    );
   };
 
   const chainOptionTemplate = (id: SUPPORTED_CHAIN_IDS) => {
@@ -80,10 +95,6 @@ export const ChainSelector = ({
       </div>
     );
   };
-
-  const currentChainLogo = useMemo(() => {
-    return getChainIcon(chainId as SUPPORTED_CHAIN_IDS);
-  }, [chainId]);
 
   const finalSizeClassName = useMemo(() => {
     switch (size) {
@@ -109,14 +120,6 @@ export const ChainSelector = ({
   return (
     <Dropdown
       value={selectedChain}
-      dropdownIcon={
-        <Image
-          src={`/images/${currentChainLogo}.svg`}
-          pt={{ root: { style: { display: "flex", alignItems: "center" } } }}
-          alt="chain-icon"
-          width="25"
-        />
-      }
       options={Object.values(SUPPORTED_CHAINS).map((chain) => chain.id)}
       placeholder={"Select Chain"}
       onChange={(e) => handleChainChange(e.value)}

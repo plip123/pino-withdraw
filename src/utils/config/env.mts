@@ -20,6 +20,7 @@ const client = z.object({
   VITE_PIMLICO_KEY: z.string(),
   VITE_PROJECT_ID: z.string(),
   VITE_MAGIC_API_KEY: z.string(),
+  VITE_SESSION_TIMEOUT: z.string().optional().default("30"),
 });
 
 /**
@@ -43,6 +44,7 @@ const processEnv: Record<
   VITE_PIMLICO_KEY: import.meta.env.VITE_PIMLICO_KEY,
   VITE_PROJECT_ID: import.meta.env.VITE_PROJECT_ID,
   VITE_MAGIC_API_KEY: import.meta.env.VITE_MAGIC_API_KEY,
+  VITE_SESSION_TIMEOUT: import.meta.env.VITE_SESSION_TIMEOUT,
 };
 
 // Don't touch the part below
