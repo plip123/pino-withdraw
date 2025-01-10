@@ -15,6 +15,7 @@ import {
 import { Home } from "@/features/home";
 import { darkTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { DEFAULT_CHAIN } from "./constants";
+import { AuthExpirationProvider } from "./providers/auth/AuthExpirationProvider";
 
 const queryClient = new QueryClient();
 
@@ -39,7 +40,9 @@ function App() {
             >
               <NotificationProvider>
                 <SmartWalletProvider>
-                  <Home />
+                  <AuthExpirationProvider>
+                    <Home />
+                  </AuthExpirationProvider>
                 </SmartWalletProvider>
               </NotificationProvider>
             </RainbowKitProvider>

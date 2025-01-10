@@ -21,9 +21,10 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
     setSmartAccountAddress,
   } = usePimlico();
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     try {
       localStorage.removeItem(env.VITE_LOCALE_TOKEN_NAME);
+      localStorage.removeItem("lastActivity");
       logOut();
       setSmartAccountAddress(undefined);
       queryClient.clear();
@@ -40,7 +41,13 @@ export const SmartWalletProvider = ({ children }: { children: ReactNode }) => {
         });
       }
     }
-  };
+  }, [
+    disconnectAsync,
+    logOut,
+    notification,
+    queryClient,
+    setSmartAccountAddress,
+  ]);
 
   const switchAccountRecursive = useCallback(async () => {
     try {
