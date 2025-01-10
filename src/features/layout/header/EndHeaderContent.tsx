@@ -1,13 +1,12 @@
-import { zeroAddress } from "viem";
 import { ConnectButton } from "@/features/auth";
-import { AddressCopyWidget, AnimatedButton, ChainSelector } from "@/components";
+import { AnimatedButton, ChainSelector } from "@/components";
 import { Button } from "primereact/button";
 import { useAccount, useDisconnect } from "wagmi";
 import { useSmartWallet } from "@/hooks";
 
 export const EndHeaderContent = () => {
   const { isConnected, isConnecting } = useAccount();
-  const { smartAccountAddress: address, logout } = useSmartWallet();
+  const { logout } = useSmartWallet();
   const { isPending: isDisconnecting } = useDisconnect();
 
   return (
@@ -18,14 +17,7 @@ export const EndHeaderContent = () => {
       </div>
       {isConnected ? (
         <div className="flex flex-wrap md:flex-nowrap mt-4 md:mt-0 gap-4 justify-content-center h-full">
-          <div className="flex flex-column md:flex-row gap-2 md:gap-4 w-full md:w-auto">
-            <AddressCopyWidget
-              address={address ?? zeroAddress}
-              className="mb-2"
-              copyIcon
-            />
-            <ChainSelector />
-          </div>
+          <ChainSelector />
           <Button
             label="Disconnect"
             className="w-full mt-auto md:mt-0"

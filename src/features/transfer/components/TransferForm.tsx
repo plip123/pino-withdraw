@@ -88,7 +88,7 @@ export const TransferForm = () => {
         )}
       </div>
 
-      {isConnected ? 
+      {isConnected ? (
         <Button
           label="Transfer"
           type="button"
@@ -97,7 +97,9 @@ export const TransferForm = () => {
           disabled={!canTransfer || !isConnected || isLoading}
           loading={isLoading}
         />
-      : <ConnectButton fullWidth />}
+      ) : (
+        <ConnectButton fullWidth />
+      )}
     </BlockUI>
   );
 };

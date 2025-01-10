@@ -40,10 +40,10 @@ export const TransferCard = () => {
           style: {
             borderRadius: "12px",
           },
-        }
+        },
       }}
     >
-      <TokenRow token={token} className="mb-4" />
+      <TokenRow token={token} className="mb-4 mx-3" />
       <TransferForm />
     </Card>
   );

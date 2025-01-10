@@ -11,7 +11,10 @@ interface ConnectButtonProps {
   isLoading?: boolean;
 }
 
-export const ConnectButton = ({ fullWidth = false, isLoading = false }: ConnectButtonProps) => {
+export const ConnectButton = ({
+  fullWidth = false,
+  isLoading = false,
+}: ConnectButtonProps) => {
   const op = useRef<OverlayPanel>(null);
   const { isConnected } = useAccount();
   const { connect, connectors, isPending } = useConnect();
