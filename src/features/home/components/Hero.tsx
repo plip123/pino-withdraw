@@ -1,6 +1,5 @@
 import { ConnectButton } from "@/features/auth";
-import { TransferModal } from "@/features/transfer";
-import { Image } from "primereact/image";
+import { TransferCard } from "@/features/transfer";
 import { useAccount } from "wagmi";
 
 export const Hero = () => {
@@ -17,23 +16,14 @@ export const Hero = () => {
             your blocked assets
           </div>
           <p className="mt-0 mb-4 text-700 line-height-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Connect your wallet to start transferring tokens. This page allows
+            you to withdraw USDT funds held in your wallet.
           </p>
-
-          {isConnected && <TransferModal />}
           {!isConnected && <ConnectButton />}
         </section>
       </div>
-      <div className="col-12 md:col-6 overflow-hidden py-8">
-        <Image
-          src="/images/cryptowallet.png"
-          alt="hero-1"
-          className="md:ml-auto block md:h-fit"
-          style={{
-            clipPath: "polygon(8% 0, 100% 0%, 100% 100%, 0 100%)",
-          }}
-        />
+      <div className="col-12 md:col-6 overflow-hidden py-8 pr-4">
+        <TransferCard />
       </div>
     </div>
   );

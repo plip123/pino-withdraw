@@ -1,6 +1,4 @@
-import { useMemo, useState } from "react";
-import { Button } from "primereact/button";
-import { Dialog } from "primereact/dialog";
+import { useMemo } from "react";
 import { TransferForm } from "./TransferForm";
 import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
 import { useAccount } from "wagmi";
@@ -9,11 +7,11 @@ import { useGetTokens, useSmartWallet } from "@/hooks";
 import { zeroAddress } from "viem";
 import { IToken } from "@/interfaces";
 import BigNumber from "bignumber.js";
+import { Card } from "primereact/card";
 
-export const TransferModal = () => {
+export const TransferCard = () => {
   const { chainId } = useAccount();
   const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
-  const [visible, setVisible] = useState<boolean>(false);
   const { data: tokenBalances } = useGetTokens({
     chainId: chainId ?? DEFAULT_CHAIN.id,
     address,
@@ -36,27 +34,17 @@ export const TransferModal = () => {
   }, [chainId, tokenBalances]);
 
   return (
-    <div>
-      <Button
-        label="Withdraw"
-        type="button"
-        className="mr-3 p-button-raised"
-        onClick={() => setVisible(true)}
-      />
-      <Dialog
-        header="Withdraw"
-        visible={visible}
-        onHide={() => {
-          if (!visible) return;
-          setVisible(false);
-        }}
-        style={{ width: "35vw" }}
-        breakpoints={{ "960px": "75vw", "641px": "90vw" }}
-        draggable={false}
-      >
-        <TokenRow token={token} className="mb-4" />
-        <TransferForm />
-      </Dialog>
-    </div>
+    <Card
+      pt={{
+        root: {
+          style: {
+            borderRadius: "12px",
+          },
+        },
+      }}
+    >
+      <TokenRow token={token} className="mb-4 mx-3" />
+      <TransferForm />
+    </Card>
   );
 };

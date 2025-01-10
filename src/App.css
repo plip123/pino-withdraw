@@ -117,3 +117,10 @@
     left: 3px;
   }
 }
+
+.p-button,
+.p-dropdown,
+.p-card,
+.p-inputtext {
+  border-radius: 12px !important;
+}

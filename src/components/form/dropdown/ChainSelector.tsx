@@ -5,12 +5,13 @@ import {
   SUPPORTED_CHAINS,
 } from "@/constants";
 import type { IChainSelector } from "./ChainSelector.interface";
-import { getChainById, getChainIcon } from "@/utils";
+import { getChainById, getChainIcon, shortenAddress } from "@/utils";
 import { useNotificationProvider } from "@/providers";
 import { Dropdown } from "primereact/dropdown";
 import { Image } from "primereact/image";
 import { useAccount } from "wagmi";
-import { useSwitchChain } from "@/hooks";
+import { useSmartWallet, useSwitchChain } from "@/hooks";
+import { zeroAddress } from "viem";
 
 export const ChainSelector = ({
   newChainId,
@@ -19,6 +20,7 @@ export const ChainSelector = ({
   onChange,
 }: IChainSelector) => {
   const { chainId } = useAccount();
+  const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
   const { switchChain } = useSwitchChain();
   const [selectedChain, setSelectedChain] = useState<SUPPORTED_CHAIN_IDS>(
     newChainId || chainId || DEFAULT_CHAIN.id,
@@ -60,6 +62,14 @@ export const ChainSelector = ({
     setSelectedChain(id);
   };
 
+  const chainValueTemplate = () => {
+    if (address === zeroAddress)
+      return <i className="pi pi-spin pi-spinner-dotted" />;
+
+    const shortAddress = shortenAddress(address);
+    return <span>{shortAddress}</span>;
+  };
+
   const chainOptionTemplate = (id: SUPPORTED_CHAIN_IDS) => {
     const icon = getChainIcon(id);
     const { name } = getChainById(id);
@@ -71,16 +81,20 @@ export const ChainSelector = ({
     );
   };
 
+  const currentChainLogo = useMemo(() => {
+    return getChainIcon(chainId as SUPPORTED_CHAIN_IDS);
+  }, [chainId]);
+
   const finalSizeClassName = useMemo(() => {
     switch (size) {
       case "normal":
-        return "h-10";
+        return "h-3rem";
       case "large":
-        return "h-16";
+        return "h-4rem";
       case "xlarge":
-        return "h-20";
+        return "h-5rem";
       default:
-        return "h-10";
+        return "h-3rem";
     }
   }, [size]);
 
@@ -95,10 +109,18 @@ export const ChainSelector = ({
   return (
     <Dropdown
       value={selectedChain}
+      dropdownIcon={
+        <Image
+          src={`/images/${currentChainLogo}.svg`}
+          pt={{ root: { style: { display: "flex", alignItems: "center" } } }}
+          alt="chain-icon"
+          width="25"
+        />
+      }
       options={Object.values(SUPPORTED_CHAINS).map((chain) => chain.id)}
       placeholder={"Select Chain"}
       onChange={(e) => handleChainChange(e.value)}
-      valueTemplate={chainOptionTemplate}
+      valueTemplate={chainValueTemplate}
       itemTemplate={chainOptionTemplate}
       className={finalChainSelectorClassName}
       autoOptionFocus

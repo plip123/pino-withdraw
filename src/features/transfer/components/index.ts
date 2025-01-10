@@ -1,2 +1,2 @@
 export * from "./TransferForm";
-export * from "./TransferModal";
+export * from "./TransferCard";
