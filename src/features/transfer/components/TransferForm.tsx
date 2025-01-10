@@ -41,7 +41,7 @@ export const TransferForm = () => {
           onClick={cleanTransferData}
         />
       }
-      containerStyle={{ padding: "16px" }}
+      containerStyle={{ padding: "16px", textAlign: "left" }}
       pt={{
         mask: {
           style: {

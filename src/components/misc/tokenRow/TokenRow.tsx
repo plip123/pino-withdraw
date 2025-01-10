@@ -19,13 +19,13 @@ export const TokenRow = ({ token, className }: ITokenRow) => {
           size="xlarge"
           shape="circle"
         />
-        <div className="flex flex-column">
+        <div className="flex flex-column text-left">
           <span>{token.symbol}</span>
           <small>{token.name}</small>
         </div>
       </div>
 
-      <div className="flex flex-column align-items-end">
+      <div className="flex flex-column align-items-end font-bold">
         <span>
           {tokenBalance} {token.symbol}
         </span>
