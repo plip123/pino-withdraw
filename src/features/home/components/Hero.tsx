@@ -16,8 +16,8 @@ export const Hero = () => {
             your blocked assets
           </div>
           <p className="mt-0 mb-4 text-700 line-height-3">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Connect your wallet to start transferring tokens. This page allows
+            you to withdraw USDT funds held in your wallet.
           </p>
           {!isConnected && <ConnectButton />}
         </section>
