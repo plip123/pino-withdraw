@@ -40,12 +40,7 @@ export const useSession = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [
-    disconnectAsync,
-    isConnected,
-    notification,
-    queryClient,
-  ]);
+  }, [disconnectAsync, isConnected, notification, queryClient]);
 
   return {
     logout,

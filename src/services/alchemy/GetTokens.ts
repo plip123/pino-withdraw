@@ -12,7 +12,7 @@ export const getTokens = async (
   address: Address,
   tokenAddr: Address,
 ) => {
-  const baseURL = `https://${CHAIN_NAME_FOR_ALCHEMY[chainId]}-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`;
+  const baseURL = `https://${CHAIN_NAME_FOR_ALCHEMY[chainId]}.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`;
 
   const data = JSON.stringify({
     jsonrpc: JSONRPC,

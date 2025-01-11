@@ -8,7 +8,11 @@ import { confirmDialog, ConfirmDialog } from "primereact/confirmdialog";
 
 const INACTIVITY_TIMEOUT = 1000 * 60 * Number(env.VITE_SESSION_TIMEOUT);
 
-export const AuthExpirationProvider = ({ children }: { children: ReactNode }) => {
+export const AuthExpirationProvider = ({
+  children,
+}: {
+  children: ReactNode;
+}) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLogoutAlertOpen, setIsLogoutAlertOpen] = useState<boolean>(false);
   const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -18,16 +22,16 @@ export const AuthExpirationProvider = ({ children }: { children: ReactNode }) =>
 
   const confirmLogout = useCallback(() => {
     confirmDialog({
-        message: "Your session is about to expire, do you want to continue?",
-        header: 'Logout',
-        icon: 'pi pi-exclamation-triangle',
-        defaultFocus: 'accept',
-        acceptLabel: "Logout",
-        rejectLabel: "Stay",
-        accept: () => logout(),
+      message: "Your session is about to expire, do you want to continue?",
+      header: "Logout",
+      icon: "pi pi-exclamation-triangle",
+      defaultFocus: "accept",
+      acceptLabel: "Logout",
+      rejectLabel: "Stay",
+      accept: () => logout(),
     });
   }, [logout]);
-  
+
   const isActive = useCallback(() => {
     const lastTimer = localStorage.getItem(TIMEOUT_SESSION_KEY);
     if (!!lastTimer && INACTIVITY_TIMEOUT + Number(lastTimer) < Date.now()) {

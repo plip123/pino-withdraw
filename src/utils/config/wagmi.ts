@@ -1,4 +1,11 @@
-import { arbitrum, mainnet, polygon } from "wagmi/chains";
+import {
+  arbitrum,
+  arbitrumSepolia,
+  mainnet,
+  polygon,
+  polygonAmoy,
+  sepolia,
+} from "wagmi/chains";
 import { Chain, http } from "viem";
 import { connectorsForWallets } from "@rainbow-me/rainbowkit";
 import {
@@ -10,12 +17,22 @@ import {
 import { createConfig } from "wagmi";
 import { env } from "@/utils";
 
-const SUPPORTED_CHAINS: Chain[] = [mainnet, polygon, arbitrum];
+const SUPPORTED_CHAINS: Chain[] = [
+  mainnet,
+  polygon,
+  arbitrum,
+  sepolia,
+  polygonAmoy,
+  arbitrumSepolia,
+];
 
 const CUSTOM_RPC_BY_CHAIN: Record<number, string> = {
   [mainnet.id]: `https://eth-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
   [polygon.id]: `https://polygon-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
   [arbitrum.id]: `https://arb-mainnet.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
+  [sepolia.id]: `https://eth-sepolia.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
+  [polygonAmoy.id]: `https://polygon-amoy.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
+  [arbitrumSepolia.id]: `https://arb-sepolia.g.alchemy.com/v2/${env.VITE_ALCHEMY_KEY}`,
 };
 
 const connectors = connectorsForWallets(
@@ -45,6 +62,9 @@ export const config = createConfig({
     [mainnet.id]: http(CUSTOM_RPC_BY_CHAIN[mainnet.id]),
     [polygon.id]: http(CUSTOM_RPC_BY_CHAIN[polygon.id]),
     [arbitrum.id]: http(CUSTOM_RPC_BY_CHAIN[arbitrum.id]),
+    [sepolia.id]: http(CUSTOM_RPC_BY_CHAIN[sepolia.id]),
+    [polygonAmoy.id]: http(CUSTOM_RPC_BY_CHAIN[polygonAmoy.id]),
+    [arbitrumSepolia.id]: http(CUSTOM_RPC_BY_CHAIN[arbitrumSepolia.id]),
   },
   connectors,
 });

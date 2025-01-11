@@ -5,10 +5,8 @@ import { isMobile } from "react-device-detect";
 import { Sidebar } from "primereact/sidebar";
 import { EndHeaderContent } from "./EndHeaderContent";
 
-
 export const HeaderLayout = () => {
   const [openMobileMenu, setOpenMobileMenu] = useState(false);
-  
 
   const StartContent = useMemo(
     () => (
@@ -32,7 +30,10 @@ export const HeaderLayout = () => {
   }, []);
 
   return (
-    <div className="w-full absolute md:relative top-0 left-0 z-10 md:bg-transparent" style={{ backgroundColor: "#4CD7D5" }}>
+    <div
+      className="w-full absolute md:relative top-0 left-0 z-10 md:bg-transparent"
+      style={{ backgroundColor: "#4CD7D5" }}
+    >
       <Toolbar
         start={StartContent}
         end={EndContent}

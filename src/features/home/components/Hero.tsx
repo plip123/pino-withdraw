@@ -42,7 +42,8 @@ export const Hero = () => {
             <p className="mt-0 mb-4 text-700 line-height-3">
               <i className="pi pi-exclamation-triangle text-orange-500 text-lg mr-1" />
               <span>
-                This page is for portfolio purposes only, the transfer is real so you should be careful where you send your assets.
+                This page is for portfolio purposes only, the transfer is real
+                so you should be careful where you send your assets.
               </span>
             </p>
             {!isConnected && <ConnectButton />}
@@ -52,7 +53,7 @@ export const Hero = () => {
           <TransferCard />
         </div>
       </div>
-    <Lottie
+      <Lottie
         lottieRef={lottieRef}
         animationData={BgBottomAnimated}
         style={{
