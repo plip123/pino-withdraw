@@ -6,8 +6,13 @@ Key Features:
 
 - Connection through Rainbowkit.
 - Quick access to expected functionality.
-- Supported chains: Ethereum, Polygon, Arbitrum.
+- Supported chains: Ethereum, Polygon, Arbitrum, Sepolia, Polygon Amoy, Arbitrum Sepolia.
 - User-friendly interface for easy navigation and usage.
+
+<img src= "https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB">
+<img src= "https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white">
+<img src= "https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=Ethereum&logoColor=white">
+<img src= "https://img.shields.io/badge/tether-168363?style=for-the-badge&logo=tether&logoColor=white">
 
 ## Table of Contents
 
