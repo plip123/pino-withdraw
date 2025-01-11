@@ -20,6 +20,14 @@ export const useSession = () => {
       localStorage.removeItem(TIMEOUT_SESSION_KEY);
       queryClient.clear();
       await disconnectAsync();
+
+      if (notification?.show) {
+        notification.show({
+          severity: "success",
+          summary: "Success: disconnect",
+          detail: "Successfully logged out",
+        });
+      }
     } catch (error) {
       console.error("Error logging out: ", error);
       if (notification?.show) {

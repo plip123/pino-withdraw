@@ -13,6 +13,7 @@ export const EndHeaderContent = () => {
     <div className="flex flex-column md:flex-row align-items-center justify-content-between h-full pt-2 md:pt-0">
       <div className="flex gap-4 mr-4">
         <AnimatedButton label="Portfolio" href="https://cpservice.es/" />
+        <AnimatedButton label="@plip123" icon="pi-github text-black" href="https://github.com/plip123" onlyIcon />
       </div>
       {isConnected ? (
         <div className="flex flex-wrap md:flex-nowrap mt-4 md:mt-0 gap-4 justify-content-center h-full">

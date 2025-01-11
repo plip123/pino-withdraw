@@ -1,2 +1,1 @@
-export * from "./AuthExpirationProvider";
-export * from "./logoutAlert";
+export * from "./authExpiration";

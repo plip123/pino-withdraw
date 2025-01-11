@@ -1,2 +1,2 @@
-export * from "./logoutAlert";
+export * from "./authExpiration";
 export * from "./session";

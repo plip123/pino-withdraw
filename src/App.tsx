@@ -7,11 +7,10 @@ import { PrimeReactProvider } from "primereact/api";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider } from "wagmi";
 import { config } from "@/utils";
-import { LogoutAlertProvider, NotificationProvider } from "@/providers";
+import { AuthExpirationProvider, NotificationProvider } from "@/providers";
 import { Home } from "@/features/home";
 import { darkTheme, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { DEFAULT_CHAIN } from "./constants";
-import { AuthExpirationProvider } from "./providers/auth/AuthExpirationProvider";
 
 const queryClient = new QueryClient();
 
@@ -34,11 +33,9 @@ function App() {
             })}
           >
             <NotificationProvider>
-              <LogoutAlertProvider>
-                <AuthExpirationProvider>
-                  <Home />
-                </AuthExpirationProvider>
-              </LogoutAlertProvider>
+              <AuthExpirationProvider>
+                <Home />
+              </AuthExpirationProvider>
             </NotificationProvider>
           </RainbowKitProvider>
         </QueryClientProvider>

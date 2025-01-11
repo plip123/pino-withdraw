@@ -4,6 +4,8 @@ export const AnimatedButton = ({
   label,
   href,
   target = "_blank",
+  icon,
+  onlyIcon = false,
   className = "",
 }: IAnimatedButtonProps) => {
   return (
@@ -17,7 +19,8 @@ export const AnimatedButton = ({
     >
       <img src="/images/aiBg.png" alt="AI" className="Countdown-ai" />
       <div className="Countdown-inner aic">
-        <span>{label}</span>
+        {!!icon && <i className={`pi ${icon} text-black-alpha-80`} />}
+        {!onlyIcon && <span>{label}</span>}
       </div>
     </a>
   );
