@@ -16,6 +16,6 @@ export const useGetTokens = ({
       const tokensResponse = await getTokens(chainId, address, tokenAddr);
       return tokensResponse.result.tokenBalances;
     },
-    enabled: enabled,
+    enabled,
   });
 };

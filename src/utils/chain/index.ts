@@ -1,6 +1,6 @@
 import {
   arbitrum,
-  bsc,
+  arbitrumSepolia,
   mainnet,
   polygon,
   polygonAmoy,
@@ -16,9 +16,8 @@ export const getChainIcon = (chainId: number) => {
     case polygon.id:
     case polygonAmoy.id:
       return "polygon";
-    case bsc.id:
-      return "binance";
     case arbitrum.id:
+    case arbitrumSepolia.id:
       return "arbitrum";
     default:
       return "logo";

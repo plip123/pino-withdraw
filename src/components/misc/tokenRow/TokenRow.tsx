@@ -2,8 +2,10 @@ import BigNumber from "bignumber.js";
 import { Avatar } from "primereact/avatar";
 import { useMemo } from "react";
 import { ITokenRow } from "./TokenRow.interface";
+import { useAccount } from "wagmi";
 
 export const TokenRow = ({ token, className }: ITokenRow) => {
+  const { chain } = useAccount();
   const tokenBalance = useMemo(() => {
     return BigNumber(token.tokenBalance).toString(10);
   }, [token]);
@@ -22,6 +24,11 @@ export const TokenRow = ({ token, className }: ITokenRow) => {
         <div className="flex flex-column text-left">
           <span>{token.symbol}</span>
           <small>{token.name}</small>
+          {!!chain && (
+            <small className="text-orange-400">
+              {chain.testnet ? "Testnet" : "Mainnet"}
+            </small>
+          )}
         </div>
       </div>
 

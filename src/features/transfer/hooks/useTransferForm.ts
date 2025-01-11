@@ -1,32 +1,38 @@
-import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
-import { useGetTokens, usePimlico, useSmartWallet } from "@/hooks";
+import {
+  BASIC_TRANSFER_TOKEN_FUNCTIONS,
+  DEFAULT_CHAIN,
+  USDT_DATA,
+} from "@/constants";
+import { useGetTokens } from "@/hooks";
 import { IToken } from "@/interfaces";
 import { useNotificationProvider } from "@/providers";
-import { buildErc20TransferTransaction } from "@/utils";
 import BigNumber from "bignumber.js";
+import { ethers } from "ethers";
 import { useMemo, useState } from "react";
-import { getAddress, zeroAddress } from "viem";
-import { useAccount } from "wagmi";
+import { getAddress, parseAbi, zeroAddress } from "viem";
+import { useAccount, useWriteContract } from "wagmi";
 
 export const useTransferForm = () => {
   const notification = useNotificationProvider();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
   const [toAddress, setToAddress] = useState<string>("");
   const [addressError, setAddressError] = useState<string>("");
   const [amount, setAmount] = useState<string>("0");
   const [amountError, setAmountError] = useState<string>("");
-  const [txHash, setTxHash] = useState<string>("");
-  const { chainId } = useAccount();
-  const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
-  const { getSmartAccountClient, publicClient } = usePimlico();
+  const { chainId, address = zeroAddress } = useAccount();
   const { data: tokenBalances } = useGetTokens({
     chainId: chainId ?? DEFAULT_CHAIN.id,
     address,
     tokenAddr: USDT_DATA[chainId ?? DEFAULT_CHAIN.id].contractAddress,
-    enabled: true,
+    enabled: address !== zeroAddress,
   });
+  const {
+    data: txHash,
+    isPending: isLoading,
+    isError,
+    isSuccess,
+    reset,
+    writeContract,
+  } = useWriteContract();
 
   const token: IToken = useMemo(() => {
     const usdtToken = USDT_DATA[chainId ?? DEFAULT_CHAIN.id];
@@ -84,31 +90,13 @@ export const useTransferForm = () => {
     }
 
     try {
-      setIsLoading(true);
-      const smartAccountClient = await getSmartAccountClient();
-      if (!smartAccountClient) throw new Error("SmartAccountClient not found");
-
-      const hash = await smartAccountClient?.sendTransactions({
-        account: smartAccountClient.account,
-        transactions: [
-          buildErc20TransferTransaction(
-            getAddress(toAddress),
-            token.contractAddress,
-            amount,
-            token.decimals,
-          ),
-        ],
+      const parseAmount = ethers.parseUnits(amount, token.decimals);
+      writeContract({
+        address: token.contractAddress,
+        abi: parseAbi(BASIC_TRANSFER_TOKEN_FUNCTIONS),
+        functionName: "transfer",
+        args: [getAddress(toAddress), parseAmount],
       });
-      const receipt = await publicClient?.waitForTransactionReceipt({
-        hash: hash as `0x${string}`,
-      });
-      setTxHash(receipt?.transactionHash ?? "");
-
-      if (receipt?.status === "success") {
-        setIsSuccess(true);
-      } else {
-        setIsError(true);
-      }
     } catch (error) {
       console.error("Error transferring", error);
       if (notification?.show) {
@@ -118,20 +106,16 @@ export const useTransferForm = () => {
           detail: "Failed to transfer",
         });
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const cleanTransferData = () => {
-    setTxHash("");
+    console.log("isSuccess", isSuccess);
     setToAddress("");
     setAmount("0");
     setAddressError("");
     setAmountError("");
-    setIsSuccess(false);
-    setIsError(false);
-    setIsLoading(false);
+    reset();
   };
 
   return {
@@ -146,7 +130,6 @@ export const useTransferForm = () => {
     isSuccess,
     isError,
     cleanTransferData,
-    setAmount,
     handleAddress,
     handleAmount,
     handleTransfer,
