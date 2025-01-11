@@ -8,6 +8,12 @@
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  #root {
+    overflow-y: auto;
+  }  
+}
+
 .aic {
   display: flex;
   justify-content: center;
@@ -90,8 +96,8 @@
   position: absolute;
   left: 3px;
   top: -85px;
-  width: 144px;
-  height: 144px;
+  width: 115px;
+  height: 115px;
   animation: floatAround 10s infinite;
 }
 

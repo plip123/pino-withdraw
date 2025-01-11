@@ -7,7 +7,7 @@ import { useSession } from "@/hooks";
 export const EndHeaderContent = () => {
   const { isConnected, isConnecting } = useAccount();
   const { isPending: isDisconnecting } = useDisconnect();
-  const { logout } = useSession();
+  const { logout, isLoading } = useSession();
 
   return (
     <div className="flex flex-column md:flex-row align-items-center justify-content-between h-full pt-2 md:pt-0">
@@ -20,7 +20,7 @@ export const EndHeaderContent = () => {
           <Button
             label="Disconnect"
             className="w-full mt-auto md:mt-0"
-            loading={isDisconnecting && isConnected}
+            loading={isDisconnecting && isConnected || isLoading}
             onClick={logout}
           />
         </div>
