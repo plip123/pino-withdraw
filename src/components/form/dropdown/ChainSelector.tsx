@@ -9,8 +9,7 @@ import { getChainById, getChainIcon, shortenAddress } from "@/utils";
 import { useNotificationProvider } from "@/providers";
 import { Dropdown } from "primereact/dropdown";
 import { Image } from "primereact/image";
-import { useAccount } from "wagmi";
-import { useSmartWallet, useSwitchChain } from "@/hooks";
+import { useAccount, useSwitchChain } from "wagmi";
 import { zeroAddress } from "viem";
 
 export const ChainSelector = ({
@@ -19,9 +18,8 @@ export const ChainSelector = ({
   fullWidth = false,
   onChange,
 }: IChainSelector) => {
-  const { chainId } = useAccount();
-  const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
-  const { switchChain, isLoading } = useSwitchChain();
+  const { chainId, address, isConnecting } = useAccount();
+  const { switchChain, isPending } = useSwitchChain();
   const [selectedChain, setSelectedChain] = useState<SUPPORTED_CHAIN_IDS>(
     newChainId || chainId || DEFAULT_CHAIN.id,
   );
@@ -39,7 +37,7 @@ export const ChainSelector = ({
 
   const handleChainChange = async (id: SUPPORTED_CHAIN_IDS) => {
     try {
-      await switchChain(id);
+      await switchChain({ chainId: id });
       if (notification?.show) {
         const chainName = getChainById(id).name;
         notification.show({
@@ -62,24 +60,15 @@ export const ChainSelector = ({
     setSelectedChain(id);
   };
 
-  const chainValueTemplate = (id: SUPPORTED_CHAIN_IDS) => {
+  const chainValueTemplate = () => {
     if (address === zeroAddress)
       return <i className="pi pi-spin pi-spinner-dotted" />;
 
-    const icon = getChainIcon(id);
     const shortAddress = shortenAddress(address);
     return (
       <div className="flex h-full align-items-center gap-4">
-        {isLoading ? (
-          <i className="pi pi-spin pi-spinner-dotted" />
-        ) : (
-          <Image
-            src={`/images/${icon}.svg`}
-            pt={{ root: { style: { display: "flex", alignItems: "center" } } }}
-            alt="chain-icon"
-            width="25"
-          />
-        )}
+        {isPending ||
+          (isConnecting && <i className="pi pi-spin pi-spinner-dotted" />)}
         <span>{shortAddress}</span>
       </div>
     );
@@ -95,6 +84,10 @@ export const ChainSelector = ({
       </div>
     );
   };
+
+  const currentChainLogo = useMemo(() => {
+    return getChainIcon(selectedChain);
+  }, [selectedChain]);
 
   const finalSizeClassName = useMemo(() => {
     switch (size) {
@@ -121,6 +114,14 @@ export const ChainSelector = ({
     <Dropdown
       value={selectedChain}
       options={Object.values(SUPPORTED_CHAINS).map((chain) => chain.id)}
+      dropdownIcon={
+        <Image
+          src={`/images/${currentChainLogo}.svg`}
+          pt={{ root: { style: { display: "flex", alignItems: "center" } } }}
+          alt="chain-icon"
+          width="25"
+        />
+      }
       placeholder={"Select Chain"}
       onChange={(e) => handleChainChange(e.value)}
       valueTemplate={chainValueTemplate}

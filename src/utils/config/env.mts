@@ -11,15 +11,13 @@ const server = z.object({});
  * built with invalid env vars. To expose them to the client, prefix them with `VITE_`.
  */
 const client = z.object({
-  BASE_URL: z.string().optional().default("localhost:5134"),
+  BASE_URL: z.string().optional().default("localhost:5173"),
   DEV: z.boolean().optional().default(true),
   MODE: z.string().optional().default("development"),
   PROD: z.boolean().optional().default(false),
   SSR: z.boolean().optional().default(false),
   VITE_ALCHEMY_KEY: z.string(),
-  VITE_PIMLICO_KEY: z.string(),
-  VITE_PROJECT_ID: z.string(),
-  VITE_MAGIC_API_KEY: z.string(),
+  VITE_WC_PROJECT_ID: z.string(),
   VITE_SESSION_TIMEOUT: z.string().optional().default("30"),
 });
 
@@ -41,9 +39,7 @@ const processEnv: Record<
   PROD: import.meta.env.PROD,
   SSR: import.meta.env.SSR,
   VITE_ALCHEMY_KEY: import.meta.env.VITE_ALCHEMY_KEY,
-  VITE_PIMLICO_KEY: import.meta.env.VITE_PIMLICO_KEY,
-  VITE_PROJECT_ID: import.meta.env.VITE_PROJECT_ID,
-  VITE_MAGIC_API_KEY: import.meta.env.VITE_MAGIC_API_KEY,
+  VITE_WC_PROJECT_ID: import.meta.env.VITE_WC_PROJECT_ID,
   VITE_SESSION_TIMEOUT: import.meta.env.VITE_SESSION_TIMEOUT,
 };
 

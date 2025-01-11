@@ -19,7 +19,7 @@ export const HeaderLayout = () => {
   const StartContent = useMemo(
     () => (
       <div className="flex align-items-center gap-2">
-        <Image src="/images/logo.png" alt="R2R" width="70" />
+        <Image src="/images/logo.png" alt="Pino" width="70" />
       </div>
     ),
     [],

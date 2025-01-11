@@ -1,7 +1,8 @@
 import { ReactNode, useCallback, useEffect, useRef } from "react";
-import { useSmartWallet } from "@/hooks";
 import { useAccount } from "wagmi";
 import { env } from "@/utils";
+import { useSession } from "@/hooks";
+import { TIMEOUT_SESSION_KEY } from "@/constants";
 
 const INACTIVITY_TIMEOUT = 1000 * 60 * Number(env.VITE_SESSION_TIMEOUT);
 
@@ -13,10 +14,10 @@ export const AuthExpirationProvider = ({
   const timeoutIdRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastTimerRef = useRef(Date.now());
   const { isConnected } = useAccount();
-  const { logout } = useSmartWallet();
+  const { logout } = useSession();
 
   const isActive = useCallback(() => {
-    const lastTimer = localStorage.getItem("lastTimer");
+    const lastTimer = localStorage.getItem(TIMEOUT_SESSION_KEY);
     if (!!lastTimer && INACTIVITY_TIMEOUT + Number(lastTimer) < Date.now()) {
       logout();
       return false;
@@ -27,7 +28,7 @@ export const AuthExpirationProvider = ({
   const updateLastTimer = useCallback(() => {
     const dateNow = Date.now();
     if (dateNow - lastTimerRef.current <= 1000) return; // debounce
-    localStorage.setItem("lastTimer", dateNow.toString());
+    localStorage.setItem(TIMEOUT_SESSION_KEY, dateNow.toString());
     lastTimerRef.current = dateNow;
   }, []);
 
@@ -39,8 +40,8 @@ export const AuthExpirationProvider = ({
   /* Effects */
   useEffect(() => {
     if (!isConnected) {
-      if (localStorage.getItem("lastTimer"))
-        localStorage.removeItem("lastTimer");
+      if (localStorage.getItem(TIMEOUT_SESSION_KEY))
+        localStorage.removeItem(TIMEOUT_SESSION_KEY);
       return;
     }
     if (!isActive()) return;

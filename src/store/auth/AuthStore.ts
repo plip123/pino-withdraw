@@ -1,18 +1,17 @@
-import { Address } from "viem";
 import { create } from "zustand";
 import { persist, devtools } from "zustand/middleware";
 import { AuthStore } from "./AuthStore.interface";
 
+// Only demostration code of how to use Zustand with persist and devtools
 export const useAuthStore = create(
   devtools(
     persist<AuthStore>(
       (set) => ({
         isLoggedIn: false,
-        eoaAddress: undefined,
-        logIn: (eoaAddress: Address) => set({ eoaAddress, isLoggedIn: true }),
-        logOut: () => set({ isLoggedIn: false, eoaAddress: undefined }),
+        logIn: () => set({ isLoggedIn: true }),
+        logOut: () => set({ isLoggedIn: false }),
       }),
-      { name: "r2rwithdraw-auth" },
+      { name: "pino-withdraw-auth" },
     ),
   ),
 );

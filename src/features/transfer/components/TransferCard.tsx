@@ -3,20 +3,19 @@ import { TransferForm } from "./TransferForm";
 import { DEFAULT_CHAIN, USDT_DATA } from "@/constants";
 import { useAccount } from "wagmi";
 import { TokenRow } from "@/components";
-import { useGetTokens, useSmartWallet } from "@/hooks";
+import { useGetTokens } from "@/hooks";
 import { zeroAddress } from "viem";
 import { IToken } from "@/interfaces";
 import BigNumber from "bignumber.js";
 import { Card } from "primereact/card";
 
 export const TransferCard = () => {
-  const { chainId } = useAccount();
-  const { smartAccountAddress: address = zeroAddress } = useSmartWallet();
+  const { chainId, address = zeroAddress } = useAccount();
   const { data: tokenBalances } = useGetTokens({
     chainId: chainId ?? DEFAULT_CHAIN.id,
     address,
     tokenAddr: USDT_DATA[chainId ?? DEFAULT_CHAIN.id].contractAddress,
-    enabled: true,
+    enabled: address !== zeroAddress,
   });
 
   const token: IToken = useMemo(() => {

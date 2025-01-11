@@ -13,7 +13,7 @@ export const AnimatedButton = ({
       rel="noreferrer"
       className={`Countdown--container aic anim ${className}`}
       data-tooltip-id="tooltip"
-      data-tooltip-content="$R2R"
+      data-tooltip-content="PINO"
     >
       <img src="/images/aiBg.png" alt="AI" className="Countdown-ai" />
       <div className="Countdown-inner aic">

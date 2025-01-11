@@ -1,11 +1,4 @@
-import {
-  arbitrum,
-  bsc,
-  mainnet,
-  polygon,
-  polygonAmoy,
-  sepolia,
-} from "wagmi/chains";
+import { arbitrum, mainnet, polygon, polygonAmoy, sepolia } from "wagmi/chains";
 import { DEFAULT_CHAIN, SUPPORTED_CHAINS, USDT_ADDRESSES } from "@/constants";
 
 export const getChainIcon = (chainId: number) => {
@@ -16,8 +9,6 @@ export const getChainIcon = (chainId: number) => {
     case polygon.id:
     case polygonAmoy.id:
       return "polygon";
-    case bsc.id:
-      return "binance";
     case arbitrum.id:
       return "arbitrum";
     default:
